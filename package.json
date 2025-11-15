@@ -8,6 +8,11 @@
     "name": "egibs",
     "email": "evan@egibs.xyz"
   },
+  "contributors": [
+    {
+      "name": "celstur"
+    }
+  ],
   "main": "bindings/node",
   "types": "bindings/node",
   "keywords": [

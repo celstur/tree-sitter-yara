@@ -1,6 +1,6 @@
 /**
  * @file Tree-sitter plugin for the Yara language.
- * @author egibs <evan@egibs.xyz>
+ * @author egibs <evan@egibs.xyz>, @author celstur
  * @license MIT
  */
 
@@ -45,7 +45,7 @@ module.exports = grammar({
     _dollar: (_) => "$",
     _hash: (_) => "#",
     _at: (_) => "@",
-    _range: (_) => "..",
+    _range: (_) => "-",
     _question: (_) => "?",
     _pipe: (_) => "|",
     _comma: (_) => ",",
@@ -141,24 +141,25 @@ module.exports = grammar({
       seq(
         $._lbrace,
         repeat1(
-          choice($.hex_byte, $.hex_wildcard, $.hex_jump, $.hex_alternative),
+          choice($.hex_byte, $.hex_jump, $.hex_alternative),
         ),
         $._rbrace,
       ),
-
-    hex_byte: (_) => /[0-9a-fA-F]{2}/,
-    hex_wildcard: (_) => "?",
+    
+    hex_byte: (_) => /~?[0-9a-fA-F?]{2}/,
+    hex_seq: ($) => seq($.hex_byte, repeat1($.hex_byte)),
     hex_jump: ($) =>
       seq(
         $._lbrack,
         optional($.integer_literal),
-        $._range,
-        optional($.integer_literal),
+        optional(
+          seq($._range, optional($.integer_literal))
+          ),
         $._rbrack,
       ),
 
     hex_alternative: ($) =>
-      seq($._lparen, sep1($.hex_byte, $._pipe), $._rparen),
+      seq($._lparen, sep1(choice($.hex_byte, $.hex_seq), $._pipe), $._rparen),
 
     regex_string: ($) =>
       prec.right(
@@ -285,7 +286,7 @@ module.exports = grammar({
       prec(
         PREC.unary,
         seq(
-          field("operator", choice("not", "-")),
+          field("operator", choice("not", "-", "~")),
           field("operand", $._expression),
         ),
       ),

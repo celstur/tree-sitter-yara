@@ -511,6 +511,10 @@
         {
           "type": "hex_byte",
           "named": true
+        },
+        {
+          "type": "hex_seq",
+          "named": true
         }
       ]
     }
@@ -525,6 +529,21 @@
       "types": [
         {
           "type": "integer_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "hex_seq",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "hex_byte",
           "named": true
         }
       ]
@@ -548,10 +567,6 @@
         },
         {
           "type": "hex_jump",
-          "named": true
-        },
-        {
-          "type": "hex_wildcard",
           "named": true
         }
       ]
@@ -1211,6 +1226,10 @@
           {
             "type": "not",
             "named": false
+          },
+          {
+            "type": "~",
+            "named": false
           }
         ]
       }
@@ -1266,10 +1285,6 @@
   },
   {
     "type": "-",
-    "named": false
-  },
-  {
-    "type": "..",
     "named": false
   },
   {
@@ -1358,7 +1373,8 @@
   },
   {
     "type": "comment",
-    "named": true
+    "named": true,
+    "extra": true
   },
   {
     "type": "condition",
@@ -1402,10 +1418,6 @@
   },
   {
     "type": "hex_byte",
-    "named": true
-  },
-  {
-    "type": "hex_wildcard",
     "named": true
   },
   {
@@ -1514,6 +1526,10 @@
   },
   {
     "type": "}",
+    "named": false
+  },
+  {
+    "type": "~",
     "named": false
   }
 ]
