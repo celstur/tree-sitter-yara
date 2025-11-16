@@ -107,7 +107,24 @@ module.exports = grammar({
 
     string_identifier: ($) => seq($._dollar, optional($.identifier)),
 
-    text_string: ($) => choice($.double_quoted_string, $.single_quoted_string),
+    text_string: ($) =>
+      choice(
+        seq(
+          $._quote,
+          repeat(choice($.text_string_escape_seq, /[^"\\]+/)),
+          $._quote
+        ),
+        seq(
+          $._squote,
+          repeat(choice($.text_string_escape_seq, /[^"\\]+/)),
+          $._squote
+        )),
+
+    text_string_escape_seq: (_) =>
+      token(choice(
+        seq('\\', /["\\rtn]/),
+        seq('\\x', /[0-9A-Fa-f]{2}/)
+      )),
 
     double_quoted_string: ($) =>
       seq(
@@ -141,13 +158,13 @@ module.exports = grammar({
       seq(
         $._lbrace,
         repeat1(
-          choice($.hex_byte, $.hex_jump, $.hex_alternative),
+          choice($.hex_string_byte, $.hex_jump, $.hex_alternative),
         ),
         $._rbrace,
       ),
     
-    hex_byte: (_) => /~?[0-9a-fA-F?]{2}/,
-    hex_seq: ($) => seq($.hex_byte, repeat1($.hex_byte)),
+    hex_string_byte: (_) => /~?[0-9a-fA-F?]{2}/,
+    hex_seq: ($) => seq($.hex_string_byte, repeat1($.hex_string_byte)),
     hex_jump: ($) =>
       seq(
         $._lbrack,
@@ -159,7 +176,7 @@ module.exports = grammar({
       ),
 
     hex_alternative: ($) =>
-      seq($._lparen, sep1(choice($.hex_byte, $.hex_seq), $._pipe), $._rparen),
+      seq($._lparen, sep1(choice($.hex_string_byte, $.hex_seq), $._pipe), $._rparen),
 
     regex_string: ($) =>
       prec.right(
@@ -192,7 +209,10 @@ module.exports = grammar({
               "base64wide",
               optional(seq($._lparen, $.string_literal, $._rparen)),
             ),
-            "xor",
+            seq(
+              "xor",
+              optional(seq($._lparen, seq($.hex_byte, $._range, $.hex_byte), $._rparen)),
+            ),
           ),
         ),
       ),
@@ -225,6 +245,7 @@ module.exports = grammar({
     size_unit: (_) => choice("KB", "MB", "GB"),
 
     integer_literal: ($) => seq(/[0-9]+/, optional($.size_unit)),
+    hex_byte: (_) => /0[xX][0-9A-Fa-f]{2}/,
 
     string_count: ($) => seq($._hash, $.string_identifier),
 

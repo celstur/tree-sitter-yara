@@ -413,14 +413,98 @@
       "type": "CHOICE",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "double_quoted_string"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_quote"
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "text_string_escape_seq"
+                  },
+                  {
+                    "type": "PATTERN",
+                    "value": "[^\"\\\\]+"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_quote"
+            }
+          ]
         },
         {
-          "type": "SYMBOL",
-          "name": "single_quoted_string"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_squote"
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "text_string_escape_seq"
+                  },
+                  {
+                    "type": "PATTERN",
+                    "value": "[^\"\\\\]+"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_squote"
+            }
+          ]
         }
       ]
+    },
+    "text_string_escape_seq": {
+      "type": "TOKEN",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "\\"
+              },
+              {
+                "type": "PATTERN",
+                "value": "[\"\\\\rtn]"
+              }
+            ]
+          },
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "\\x"
+              },
+              {
+                "type": "PATTERN",
+                "value": "[0-9A-Fa-f]{2}"
+              }
+            ]
+          }
+        ]
+      }
     },
     "double_quoted_string": {
       "type": "SEQ",
@@ -545,7 +629,7 @@
             "members": [
               {
                 "type": "SYMBOL",
-                "name": "hex_byte"
+                "name": "hex_string_byte"
               },
               {
                 "type": "SYMBOL",
@@ -564,7 +648,7 @@
         }
       ]
     },
-    "hex_byte": {
+    "hex_string_byte": {
       "type": "PATTERN",
       "value": "~?[0-9a-fA-F?]{2}"
     },
@@ -573,13 +657,13 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "hex_byte"
+          "name": "hex_string_byte"
         },
         {
           "type": "REPEAT1",
           "content": {
             "type": "SYMBOL",
-            "name": "hex_byte"
+            "name": "hex_string_byte"
           }
         }
       ]
@@ -653,7 +737,7 @@
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "hex_byte"
+                  "name": "hex_string_byte"
                 },
                 {
                   "type": "SYMBOL",
@@ -675,7 +759,7 @@
                     "members": [
                       {
                         "type": "SYMBOL",
-                        "name": "hex_byte"
+                        "name": "hex_string_byte"
                       },
                       {
                         "type": "SYMBOL",
@@ -844,8 +928,51 @@
               ]
             },
             {
-              "type": "STRING",
-              "value": "xor"
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "xor"
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SEQ",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "_lparen"
+                        },
+                        {
+                          "type": "SEQ",
+                          "members": [
+                            {
+                              "type": "SYMBOL",
+                              "name": "hex_byte"
+                            },
+                            {
+                              "type": "SYMBOL",
+                              "name": "_range"
+                            },
+                            {
+                              "type": "SYMBOL",
+                              "name": "hex_byte"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "_rparen"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }
@@ -982,6 +1109,10 @@
           ]
         }
       ]
+    },
+    "hex_byte": {
+      "type": "PATTERN",
+      "value": "0[xX][0-9A-Fa-f]{2}"
     },
     "string_count": {
       "type": "SEQ",
