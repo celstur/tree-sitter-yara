@@ -36,7 +36,7 @@
             "named": true
           },
           {
-            "type": "integer_literal",
+            "type": "integer_decimal",
             "named": true
           },
           {
@@ -196,7 +196,7 @@
             "named": true
           },
           {
-            "type": "integer_literal",
+            "type": "integer_decimal",
             "named": true
           },
           {
@@ -277,7 +277,7 @@
           "named": true
         },
         {
-          "type": "integer_literal",
+          "type": "integer_decimal",
           "named": true
         },
         {
@@ -367,7 +367,7 @@
           "named": true
         },
         {
-          "type": "integer_literal",
+          "type": "integer_decimal",
           "named": true
         },
         {
@@ -450,7 +450,7 @@
           "named": true
         },
         {
-          "type": "integer_literal",
+          "type": "integer_decimal",
           "named": true
         },
         {
@@ -528,7 +528,7 @@
       "required": false,
       "types": [
         {
-          "type": "integer_literal",
+          "type": "integer_decimal",
           "named": true
         }
       ]
@@ -603,7 +603,7 @@
     }
   },
   {
-    "type": "integer_literal",
+    "type": "integer_decimal",
     "named": true,
     "fields": {},
     "children": {
@@ -640,7 +640,7 @@
             "named": true
           },
           {
-            "type": "integer_literal",
+            "type": "integer_decimal",
             "named": true
           },
           {
@@ -722,7 +722,7 @@
           "named": true
         },
         {
-          "type": "integer_literal",
+          "type": "integer_decimal",
           "named": true
         },
         {
@@ -784,7 +784,7 @@
       "required": false,
       "types": [
         {
-          "type": "integer_literal",
+          "type": "integer_decimal",
           "named": true
         }
       ]
@@ -799,7 +799,7 @@
       "required": true,
       "types": [
         {
-          "type": "integer_literal",
+          "type": "integer_decimal",
           "named": true
         }
       ]
@@ -1010,7 +1010,7 @@
       "required": true,
       "types": [
         {
-          "type": "integer_literal",
+          "type": "integer_decimal",
           "named": true
         },
         {
@@ -1067,7 +1067,7 @@
       "required": true,
       "types": [
         {
-          "type": "integer_literal",
+          "type": "integer_decimal",
           "named": true
         },
         {
@@ -1135,7 +1135,7 @@
       "required": false,
       "types": [
         {
-          "type": "text_string_escape_seq",
+          "type": "text_string_esc_seq",
           "named": true
         }
       ]
@@ -1178,7 +1178,7 @@
             "named": true
           },
           {
-            "type": "integer_literal",
+            "type": "integer_decimal",
             "named": true
           },
           {
@@ -1505,7 +1505,7 @@
     "named": true
   },
   {
-    "type": "text_string_escape_seq",
+    "type": "text_string_esc_seq",
     "named": true
   },
   {

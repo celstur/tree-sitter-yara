@@ -111,48 +111,17 @@ module.exports = grammar({
       choice(
         seq(
           $._quote,
-          repeat(choice($.text_string_escape_seq, /[^"\\]+/)),
+          repeat(choice($.text_string_esc_seq, /[^"\\]+/)),
           $._quote
         ),
         seq(
           $._squote,
-          repeat(choice($.text_string_escape_seq, /[^"\\]+/)),
+          repeat(choice($.text_string_esc_seq, /[^"\\]+/)),
           $._squote
         )),
 
-    text_string_escape_seq: (_) =>
-      token(choice(
-        seq('\\', /["\\rtn]/),
-        seq('\\x', /[0-9A-Fa-f]{2}/)
-      )),
-
-    double_quoted_string: ($) =>
-      seq(
-        $._quote,
-        repeat(choice(token.immediate(prec(1, /[^"\\]+/)), $.escape_sequence)),
-        $._quote,
-      ),
-
-    single_quoted_string: ($) =>
-      seq(
-        $._squote,
-        repeat(choice(token.immediate(prec(1, /[^'\\]+/)), $.escape_sequence)),
-        $._squote,
-      ),
-
-    escape_sequence: (_) =>
-      token.immediate(
-        seq(
-          "\\",
-          choice(
-            /[^xuU]/,
-            /\d{2,3}/,
-            /x[0-9a-fA-F]{2}/,
-            /u[0-9a-fA-F]{4}/,
-            /U[0-9a-fA-F]{8}/,
-          ),
-        ),
-      ),
+    text_string_esc_seq: (_) =>
+      token.immediate(seq('\\', choice(/["\\rtn]/, /x[0-9A-Fa-f]{2}/))),
 
     hex_string: ($) =>
       seq(
@@ -162,7 +131,6 @@ module.exports = grammar({
         ),
         $._rbrace,
       ),
-    
     hex_string_byte: (_) => /~?[0-9a-fA-F?]{2}/,
     hex_seq: ($) => seq($.hex_string_byte, repeat1($.hex_string_byte)),
     hex_jump: ($) =>
@@ -174,7 +142,6 @@ module.exports = grammar({
           ),
         $._rbrack,
       ),
-
     hex_alternative: ($) =>
       seq($._lparen, sep1(choice($.hex_string_byte, $.hex_seq), $._pipe), $._rparen),
 
@@ -188,7 +155,6 @@ module.exports = grammar({
           optional($.string_modifiers),
         ),
       ),
-
     regex_string_content: ($) =>
       repeat1(choice(token.immediate(/[^\/\\]+/), $.escape_sequence)),
 
@@ -217,6 +183,7 @@ module.exports = grammar({
                 optional(seq($._range, $.hex_byte)),
                 $._rparen,
               )),
+            "private",
             ),
           ),
         ),
@@ -250,7 +217,38 @@ module.exports = grammar({
     size_unit: (_) => choice("KB", "MB", "GB"),
 
     integer_decimal: ($) => seq(/[0-9]+/, optional($.size_unit)),
-    hex_byte: (_) => /0x[0-9A-Fa-f]{2}/, // |25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9] ---> 0-255
+    hex_byte: (_) => /0x[0-9A-Fa-f]{2}|25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9]/,
+    boolean_literal: (_) => choice("true", "false"),
+    string_literal: ($) =>
+      choice($.double_quoted_string, $.single_quoted_string),
+
+    double_quoted_string: ($) =>
+      seq(
+        $._quote,
+        repeat(choice(token.immediate(prec(1, /[^"\\]+/)), $.escape_sequence)),
+        $._quote,
+      ),
+
+    single_quoted_string: ($) =>
+      seq(
+        $._squote,
+        repeat(choice(token.immediate(prec(1, /[^'\\]+/)), $.escape_sequence)),
+        $._squote,
+      ),
+
+    escape_sequence: (_) =>
+      token.immediate(
+        seq(
+          "\\",
+          choice(
+            /[^xuU]/,
+            /\d{2,3}/,
+            /x[0-9a-fA-F]{2}/,
+            /u[0-9a-fA-F]{4}/,
+            /U[0-9a-fA-F]{8}/,
+          ),
+        ),
+      ),
 
     string_count: ($) => seq($._hash, $.string_identifier),
 
@@ -382,9 +380,6 @@ module.exports = grammar({
     parenthesized_expression: ($) => seq($._lparen, $._expression, $._rparen),
 
     identifier: (_) => /[a-zA-Z_][a-zA-Z0-9_]*/,
-    boolean_literal: (_) => choice("true", "false"),
-    string_literal: ($) =>
-      choice($.double_quoted_string, $.single_quoted_string),
 
     comment: (_) =>
       token(

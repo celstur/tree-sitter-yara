@@ -10,4 +10,5 @@ This is a fork of the original [tree-sitter-yara](https://github.com/egibs/tree-
 - [x] support for **jumps in hex strings**
 - [x] support for **byte range after the *xor* string modifier**
 - [x] support for **escape sequences in text strings**
+- [x] support for **the *private* string modifier**
 - [ ] support for **hexadecimal integer literals where they are allowed**
