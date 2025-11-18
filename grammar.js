@@ -90,7 +90,7 @@ module.exports = grammar({
         $._equal,
         field(
           "value",
-          choice($.string_literal, $.integer_literal, $.boolean_literal),
+          choice($.string_literal, $.integer_decimal, $.boolean_literal),
         ),
       ),
 
@@ -168,9 +168,9 @@ module.exports = grammar({
     hex_jump: ($) =>
       seq(
         $._lbrack,
-        optional($.integer_literal),
+        optional($.integer_decimal),
         optional(
-          seq($._range, optional($.integer_literal))
+          seq($._range, optional($.integer_decimal))
           ),
         $._rbrack,
       ),
@@ -211,7 +211,12 @@ module.exports = grammar({
             ),
             seq(
               "xor",
-              optional(seq($._lparen, seq($.hex_byte, $._range, $.hex_byte), $._rparen)),
+              optional(seq(
+                $._lparen,
+                $.hex_byte,
+                optional(seq($._range, $.hex_byte)),
+                $._rparen,
+              )),
             ),
           ),
         ),
@@ -223,7 +228,7 @@ module.exports = grammar({
       choice(
         $.identifier,
         $.string_identifier,
-        $.integer_literal,
+        $.integer_decimal,
         $.boolean_literal,
         $.string_literal,
         $.string_count,
@@ -244,8 +249,8 @@ module.exports = grammar({
 
     size_unit: (_) => choice("KB", "MB", "GB"),
 
-    integer_literal: ($) => seq(/[0-9]+/, optional($.size_unit)),
-    hex_byte: (_) => /0[xX][0-9A-Fa-f]{2}/,
+    integer_decimal: ($) => seq(/[0-9]+/, optional($.size_unit)),
+    hex_byte: (_) => /0x[0-9A-Fa-f]{2}/, // |25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9] ---> 0-255
 
     string_count: ($) => seq($._hash, $.string_identifier),
 
@@ -253,14 +258,14 @@ module.exports = grammar({
       seq(
         $._at,
         $.string_identifier,
-        optional(seq($._lbrack, $.integer_literal, $._rbrack)),
+        optional(seq($._lbrack, $.integer_decimal, $._rbrack)),
       ),
 
     string_length: ($) =>
       seq(
         $._bang,
         $.string_identifier,
-        optional(seq($._lbrack, $.integer_literal, $._rbrack)),
+        optional(seq($._lbrack, $.integer_decimal, $._rbrack)),
       ),
 
     for_expression: ($) =>
@@ -292,7 +297,7 @@ module.exports = grammar({
     of_expression: ($) => seq($.quantifier, "of", $.string_set),
 
     quantifier: ($) =>
-      choice("all", "any", "none", seq($.integer_literal, "of")),
+      choice("all", "any", "none", seq($.integer_decimal, "of")),
 
     string_set: ($) =>
       choice(
@@ -301,7 +306,7 @@ module.exports = grammar({
       ),
 
     range: ($) =>
-      seq($._lparen, $.integer_literal, $._range, $.integer_literal, $._rparen),
+      seq($._lparen, $.integer_decimal, $._range, $.integer_decimal, $._rparen),
 
     unary_expression: ($) =>
       prec(
