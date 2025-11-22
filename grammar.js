@@ -46,6 +46,7 @@ module.exports = grammar({
     _hash: (_) => "#",
     _at: (_) => "@",
     _range: (_) => "-",
+    _range2: (_) => "..",
     _question: (_) => "?",
     _pipe: (_) => "|",
     _comma: (_) => ",",
@@ -196,10 +197,13 @@ module.exports = grammar({
         $.identifier,
         $.string_identifier,
         $.integer_decimal,
+        $.integer_hexadecimal,
         $.boolean_literal,
         $.string_literal,
         $.string_count,
         $.string_offset,
+        $.string_at_offset,
+        $.string_at_range, 
         $.string_length,
         $.filesize_keyword,
         $.entrypoint_keyword,
@@ -217,6 +221,7 @@ module.exports = grammar({
     size_unit: (_) => choice("KB", "MB", "GB"),
 
     integer_decimal: ($) => seq(/[0-9]+/, optional($.size_unit)),
+    integer_hexadecimal: ($) => /0x[0-9A-Fa-f]+/,
     hex_byte: (_) => /0x[0-9A-Fa-f]{2}|25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9]/,
     boolean_literal: (_) => choice("true", "false"),
     string_literal: ($) =>
@@ -250,13 +255,38 @@ module.exports = grammar({
         ),
       ),
 
-    string_count: ($) => seq($._hash, $.string_identifier),
+    string_count: ($) => 
+      seq(
+        $._hash,
+        $.identifier,
+        optional(seq("in", $._lparen, $._expression, $._range2, $._expression, $._rparen))
+      ),
 
     string_offset: ($) =>
       seq(
         $._at,
         $.string_identifier,
-        optional(seq($._lbrack, $.integer_decimal, $._rbrack)),
+        optional(seq($._lbrack, $.integer_decimal, $._rbrack))
+      ),
+
+    string_at_offset: ($) =>
+      prec.left(
+        PREC.comparative,
+        seq(
+          $.string_identifier,
+          "at",
+          $._expression
+        )
+      ),
+
+    string_at_range: ($) =>
+      prec.left(
+        PREC.comparative,
+        seq(
+          $.string_identifier,
+          "in",
+          $._lparen, $._expression, $._range2, $._expression, $._rparen
+        )
       ),
 
     string_length: ($) =>
@@ -304,7 +334,7 @@ module.exports = grammar({
       ),
 
     range: ($) =>
-      seq($._lparen, $.integer_decimal, $._range, $.integer_decimal, $._rparen),
+      seq($._lparen, $.integer_decimal, $._range2, $.integer_decimal, $._rparen),
 
     unary_expression: ($) =>
       prec(

@@ -48,6 +48,14 @@
             "named": true
           },
           {
+            "type": "string_at_offset",
+            "named": true
+          },
+          {
+            "type": "string_at_range",
+            "named": true
+          },
+          {
             "type": "string_count",
             "named": true
           },
@@ -208,6 +216,14 @@
             "named": true
           },
           {
+            "type": "string_at_offset",
+            "named": true
+          },
+          {
+            "type": "string_at_range",
+            "named": true
+          },
+          {
             "type": "string_count",
             "named": true
           },
@@ -286,6 +302,14 @@
         },
         {
           "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "string_at_offset",
+          "named": true
+        },
+        {
+          "type": "string_at_range",
           "named": true
         },
         {
@@ -383,6 +407,14 @@
           "named": true
         },
         {
+          "type": "string_at_offset",
+          "named": true
+        },
+        {
+          "type": "string_at_range",
+          "named": true
+        },
+        {
           "type": "string_count",
           "named": true
         },
@@ -467,6 +499,14 @@
         },
         {
           "type": "range",
+          "named": true
+        },
+        {
+          "type": "string_at_offset",
+          "named": true
+        },
+        {
+          "type": "string_at_range",
           "named": true
         },
         {
@@ -734,6 +774,14 @@
           "named": true
         },
         {
+          "type": "string_at_offset",
+          "named": true
+        },
+        {
+          "type": "string_at_range",
+          "named": true
+        },
+        {
           "type": "string_count",
           "named": true
         },
@@ -928,15 +976,249 @@
     }
   },
   {
+    "type": "string_at_offset",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "entrypoint_keyword",
+          "named": true
+        },
+        {
+          "type": "filesize_keyword",
+          "named": true
+        },
+        {
+          "type": "for_expression",
+          "named": true
+        },
+        {
+          "type": "for_of_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "integer_decimal",
+          "named": true
+        },
+        {
+          "type": "of_expression",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "string_at_offset",
+          "named": true
+        },
+        {
+          "type": "string_at_range",
+          "named": true
+        },
+        {
+          "type": "string_count",
+          "named": true
+        },
+        {
+          "type": "string_identifier",
+          "named": true
+        },
+        {
+          "type": "string_length",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "string_offset",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "string_at_range",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "entrypoint_keyword",
+          "named": true
+        },
+        {
+          "type": "filesize_keyword",
+          "named": true
+        },
+        {
+          "type": "for_expression",
+          "named": true
+        },
+        {
+          "type": "for_of_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "integer_decimal",
+          "named": true
+        },
+        {
+          "type": "of_expression",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "string_at_offset",
+          "named": true
+        },
+        {
+          "type": "string_at_range",
+          "named": true
+        },
+        {
+          "type": "string_count",
+          "named": true
+        },
+        {
+          "type": "string_identifier",
+          "named": true
+        },
+        {
+          "type": "string_length",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "string_offset",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "string_count",
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "entrypoint_keyword",
+          "named": true
+        },
+        {
+          "type": "filesize_keyword",
+          "named": true
+        },
+        {
+          "type": "for_expression",
+          "named": true
+        },
+        {
+          "type": "for_of_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "integer_decimal",
+          "named": true
+        },
+        {
+          "type": "of_expression",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "string_at_offset",
+          "named": true
+        },
+        {
+          "type": "string_at_range",
+          "named": true
+        },
+        {
+          "type": "string_count",
+          "named": true
+        },
+        {
           "type": "string_identifier",
+          "named": true
+        },
+        {
+          "type": "string_length",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "string_offset",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
           "named": true
         }
       ]
@@ -1190,6 +1472,14 @@
             "named": true
           },
           {
+            "type": "string_at_offset",
+            "named": true
+          },
+          {
+            "type": "string_at_range",
+            "named": true
+          },
+          {
             "type": "string_count",
             "named": true
           },
@@ -1288,6 +1578,10 @@
     "named": false
   },
   {
+    "type": "..",
+    "named": false
+  },
+  {
     "type": "/",
     "named": false
   },
@@ -1361,6 +1655,10 @@
   },
   {
     "type": "ascii",
+    "named": false
+  },
+  {
+    "type": "at",
     "named": false
   },
   {

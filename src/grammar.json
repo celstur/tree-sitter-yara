@@ -75,6 +75,10 @@
       "type": "STRING",
       "value": "-"
     },
+    "_range2": {
+      "type": "STRING",
+      "value": ".."
+    },
     "_question": {
       "type": "STRING",
       "value": "?"
@@ -473,33 +477,24 @@
       ]
     },
     "text_string_esc_seq": {
-      "type": "TOKEN",
+      "type": "IMMEDIATE_TOKEN",
       "content": {
-        "type": "CHOICE",
+        "type": "SEQ",
         "members": [
           {
-            "type": "SEQ",
+            "type": "STRING",
+            "value": "\\"
+          },
+          {
+            "type": "CHOICE",
             "members": [
-              {
-                "type": "STRING",
-                "value": "\\"
-              },
               {
                 "type": "PATTERN",
                 "value": "[\"\\\\rtn]"
-              }
-            ]
-          },
-          {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "STRING",
-                "value": "\\x"
               },
               {
                 "type": "PATTERN",
-                "value": "[0-9A-Fa-f]{2}"
+                "value": "x[0-9A-Fa-f]{2}"
               }
             ]
           }
@@ -931,6 +926,14 @@
         },
         {
           "type": "SYMBOL",
+          "name": "string_at_offset"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "string_at_range"
+        },
+        {
+          "type": "SYMBOL",
           "name": "string_length"
         },
         {
@@ -1161,7 +1164,44 @@
         },
         {
           "type": "SYMBOL",
-          "name": "string_identifier"
+          "name": "identifier"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "in"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_lparen"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_expression"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_range2"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_expression"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_rparen"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
     },
@@ -1202,6 +1242,64 @@
           ]
         }
       ]
+    },
+    "string_at_offset": {
+      "type": "PREC_LEFT",
+      "value": 3,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "string_identifier"
+          },
+          {
+            "type": "STRING",
+            "value": "at"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_expression"
+          }
+        ]
+      }
+    },
+    "string_at_range": {
+      "type": "PREC_LEFT",
+      "value": 3,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "string_identifier"
+          },
+          {
+            "type": "STRING",
+            "value": "in"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_lparen"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_expression"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_range2"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_expression"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_rparen"
+          }
+        ]
+      }
     },
     "string_length": {
       "type": "SEQ",
@@ -1430,7 +1528,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_range"
+          "name": "_range2"
         },
         {
           "type": "SYMBOL",
