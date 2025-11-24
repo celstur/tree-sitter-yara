@@ -910,6 +910,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "integer_hexadecimal"
+        },
+        {
+          "type": "SYMBOL",
           "name": "boolean_literal"
         },
         {
@@ -942,7 +946,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "entrypoint_keyword"
+          "name": "read_function_call"
         },
         {
           "type": "SYMBOL",
@@ -973,10 +977,6 @@
     "filesize_keyword": {
       "type": "STRING",
       "value": "filesize"
-    },
-    "entrypoint_keyword": {
-      "type": "STRING",
-      "value": "entrypoint"
     },
     "size_unit": {
       "type": "CHOICE",
@@ -1015,6 +1015,10 @@
           ]
         }
       ]
+    },
+    "integer_hexadecimal": {
+      "type": "PATTERN",
+      "value": "0x[0-9A-Fa-f]+"
     },
     "hex_byte": {
       "type": "PATTERN",
@@ -1336,6 +1340,80 @@
               "type": "BLANK"
             }
           ]
+        }
+      ]
+    },
+    "read_function_name": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "int8"
+        },
+        {
+          "type": "STRING",
+          "value": "int16"
+        },
+        {
+          "type": "STRING",
+          "value": "int32"
+        },
+        {
+          "type": "STRING",
+          "value": "uint8"
+        },
+        {
+          "type": "STRING",
+          "value": "uint16"
+        },
+        {
+          "type": "STRING",
+          "value": "uint32"
+        },
+        {
+          "type": "STRING",
+          "value": "int8be"
+        },
+        {
+          "type": "STRING",
+          "value": "int16be"
+        },
+        {
+          "type": "STRING",
+          "value": "int32be"
+        },
+        {
+          "type": "STRING",
+          "value": "uint8be"
+        },
+        {
+          "type": "STRING",
+          "value": "uint16be"
+        },
+        {
+          "type": "STRING",
+          "value": "uint32be"
+        }
+      ]
+    },
+    "read_function_call": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "read_function_name"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_lparen"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_rparen"
         }
       ]
     },
@@ -1847,6 +1925,23 @@
     "identifier": {
       "type": "PATTERN",
       "value": "[a-zA-Z_][a-zA-Z0-9_]*"
+    },
+    "module_variable": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "STRING",
+          "value": "."
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        }
+      ]
     },
     "comment": {
       "type": "TOKEN",

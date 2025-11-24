@@ -122,7 +122,7 @@ module.exports = grammar({
         )),
 
     text_string_esc_seq: (_) =>
-      token.immediate(seq('\\', choice(/["\\rtn]/, /x[0-9A-Fa-f]{2}/))),
+      token.immediate(seq('\\', choice(/["\\rtn]/, /x[0-9A-Fa-f]{2}/))), // ---> \", \\, \r, \t, \n, \xHH
 
     hex_string: ($) =>
       seq(
@@ -139,7 +139,7 @@ module.exports = grammar({
         $._lbrack,
         optional($.integer_decimal),
         optional(
-          seq($._range, optional($.integer_decimal))
+          seq($._range, optional($.integer_decimal)) // ---> no order check
           ),
         $._rbrack,
       ),
@@ -163,7 +163,7 @@ module.exports = grammar({
       prec.left(
         1,
         repeat1(
-          choice(
+          choice( // ---> no compatibility check
             "nocase",
             "ascii",
             "wide",
@@ -181,7 +181,7 @@ module.exports = grammar({
               optional(seq(
                 $._lparen,
                 $.hex_byte,
-                optional(seq($._range, $.hex_byte)),
+                optional(seq($._range, $.hex_byte)), // ---> no order check
                 $._rparen,
               )),
             "private",
@@ -206,7 +206,7 @@ module.exports = grammar({
         $.string_at_range, 
         $.string_length,
         $.filesize_keyword,
-        $.entrypoint_keyword,
+        $.read_function_call,
         $.for_expression,
         $.for_of_expression,
         $.of_expression,
@@ -216,7 +216,6 @@ module.exports = grammar({
       ),
 
     filesize_keyword: (_) => "filesize",
-    entrypoint_keyword: (_) => "entrypoint",
 
     size_unit: (_) => choice("KB", "MB", "GB"),
 
@@ -233,7 +232,6 @@ module.exports = grammar({
         repeat(choice(token.immediate(prec(1, /[^"\\]+/)), $.escape_sequence)),
         $._quote,
       ),
-
     single_quoted_string: ($) =>
       seq(
         $._squote,
@@ -259,26 +257,23 @@ module.exports = grammar({
       seq(
         $._hash,
         $.identifier,
-        optional(seq("in", $._lparen, $._expression, $._range2, $._expression, $._rparen))
+        optional(seq("in", $._lparen, $._expression, $._range2, $._expression, $._rparen)) // ---> no expression type check
       ),
-
     string_offset: ($) =>
       seq(
         $._at,
         $.string_identifier,
-        optional(seq($._lbrack, $.integer_decimal, $._rbrack))
+        optional(seq($._lbrack, $.integer_decimal, $._rbrack)) // ---> no zero check
       ),
-
     string_at_offset: ($) =>
       prec.left(
         PREC.comparative,
         seq(
           $.string_identifier,
           "at",
-          $._expression
+          $._expression // ---> no expression type check
         )
       ),
-
     string_at_range: ($) =>
       prec.left(
         PREC.comparative,
@@ -288,13 +283,20 @@ module.exports = grammar({
           $._lparen, $._expression, $._range2, $._expression, $._rparen
         )
       ),
-
     string_length: ($) =>
       seq(
         $._bang,
         $.string_identifier,
-        optional(seq($._lbrack, $.integer_decimal, $._rbrack)),
+        optional(seq($._lbrack, $.integer_decimal, $._rbrack)), // ---> no zero check
       ),
+
+    read_function_name: (_) => choice(
+      "int8", "int16", "int32",
+      "uint8", "uint16", "uint32",
+      "int8be", "int16be", "int32be",
+      "uint8be", "uint16be", "uint32be",
+    ),
+    read_function_call: ($) => seq($.read_function_name, $._lparen, $._expression, $._rparen), // ---> no expression type check (only uint allowed)
 
     for_expression: ($) =>
       seq(
@@ -410,6 +412,13 @@ module.exports = grammar({
     parenthesized_expression: ($) => seq($._lparen, $._expression, $._rparen),
 
     identifier: (_) => /[a-zA-Z_][a-zA-Z0-9_]*/,
+
+    module_variable: ($) =>
+      seq(
+        $.identifier,
+        ".",
+        $.identifier,
+      ),
 
     comment: (_) =>
       token(
