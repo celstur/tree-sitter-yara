@@ -22,7 +22,9 @@ This is a fork of the original [tree-sitter-yara](https://github.com/egibs/tree-
 - [x] support for **integer-reading functions**
 
 ### General
-- [ ] partial support for **hexadecimal integer literals where they are allowed**
+- [x] partial support for **hexadecimal integer literals where they are allowed**
+- [x] partial support for **correct semantics in addition to syntax**
+    - namely applying rules for *zero* in things like *indexes* or *ranges*
 ---
 ### Testing
 So far, the parser has been tested on the example rules from the [*Writing YARA rules*](https://yara.readthedocs.io/en/stable/writingrules.html) tutorial. I am planning to test it on larger subsets of rules after it is more developed.
