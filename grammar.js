@@ -106,7 +106,7 @@ module.exports = grammar({
         optional($.string_modifiers),
       ),
 
-    string_identifier: ($) => seq($._dollar, optional($.identifier)),
+    string_identifier: (_) => token(/\$[a-zA-Z_][a-zA-Z0-9_]*|\$/),
 
     text_string: ($) =>
       choice(
@@ -135,13 +135,19 @@ module.exports = grammar({
     hex_string_byte: (_) => /~?[0-9a-fA-F?]{2}/,
     hex_seq: ($) => seq($.hex_string_byte, repeat1($.hex_string_byte)),
     hex_jump: ($) =>
-      choice(
-        seq(
-          choice($.integer_zero, $.integer_decimal_positive),
-          optional(seq($._range, optional($.integer_decimal_positive)))
+      seq(
+        $._lbrack,
+        choice(
+          seq(
+            optional(choice($.integer_decimal_positive, $.integer_zero)),
+            $._range,
+            optional(choice($.integer_decimal_positive, $.integer_zero))
+          ),
+          $.integer_decimal_positive,
+          $.integer_zero
         ),
-        seq($._range, optional($.integer_decimal_positive))
-      ), // [0-0] or [-0] not allowed, but [0] is allowed.
+        $._rbrack
+      ),
     hex_alternative: ($) =>
       seq($._lparen, sep1(choice($.hex_string_byte, $.hex_seq), $._pipe), $._rparen),
 
@@ -183,8 +189,8 @@ module.exports = grammar({
                 optional(seq($._range, $.hex_byte)),
                 $._rparen,
               )),
-            "private",
             ),
+            "private",
           ),
         ),
       ),
@@ -195,6 +201,7 @@ module.exports = grammar({
       choice(
         $.identifier,
         $.string_identifier,
+        $.module_var_or_func,
         $.integer_decimal_positive,
         $.integer_zero,
         $.integer_hexadecimal,
@@ -207,8 +214,8 @@ module.exports = grammar({
         $.string_length,
         $.filesize_keyword,
         $.read_function_call,
-        $.for_expression,
         $.for_of_expression,
+        $.for_in_expression,
         $.of_expression,
         $.parenthesized_expression,
         $.unary_expression,
@@ -254,23 +261,24 @@ module.exports = grammar({
         ),
       ),
 
-    string_count: ($) => 
+    string_count: ($) =>
       seq(
-        $._hash,
-        $.identifier,
-        optional(seq("in", $._lparen, $._expression, $._range2, $._expression, $._rparen))
+        token(/#[a-zA-Z_][a-zA-Z0-9_]*|#/),
+        optional(seq("in", $.range))
       ),
     string_offset: ($) =>
-      seq(
-        $._at,
-        $.string_identifier,
-        optional(seq($._lbrack, $.integer_decimal_positive, $._rbrack))
+      choice(
+        seq(
+          token(/@[a-zA-Z_][a-zA-Z0-9_]*/),
+          optional(seq($._lbrack, $._expression, $._rbrack))
+        ),
+        token(/@/)
       ),
     string_at_offset: ($) =>
       prec.left(
         PREC.comparative,
         seq(
-          $.string_identifier,
+          choice($.string_identifier, $.of_expression),
           "at",
           $._expression
         )
@@ -279,16 +287,18 @@ module.exports = grammar({
       prec.left(
         PREC.comparative,
         seq(
-          $.string_identifier,
+          choice($.string_identifier, $.of_expression),
           "in",
-          $._lparen, $._expression, $._range2, $._expression, $._rparen
+          $.range
         )
       ),
     string_length: ($) =>
-      seq(
-        $._bang,
-        $.string_identifier,
-        optional(seq($._lbrack, $.integer_decimal_positive, $._rbrack)),
+      choice(
+        seq(
+          token(/![a-zA-Z_][a-zA-Z0-9_]*/),
+          optional(seq($._lbrack, $._expression, $._rbrack))
+        ),
+        token(/!/)
       ),
 
     read_function_name: (_) => choice(
@@ -299,45 +309,43 @@ module.exports = grammar({
     ),
     read_function_call: ($) => seq($.read_function_name, $._lparen, $._expression, $._rparen),
 
-    for_expression: ($) =>
-      seq(
-        "for",
-        $.quantifier,
-        "of",
-        $.string_set,
-        $._colon,
-        $._lparen,
-        $._expression,
-        $._rparen,
-      ),
-
     for_of_expression: ($) =>
       seq(
         "for",
-        $.quantifier,
-        "of",
-        $.string_set,
-        "in",
-        $.range,
+        $.of_expression,
         $._colon,
-        $._lparen,
-        $._expression,
-        $._rparen,
+        $.parenthesized_expression,
+      ),
+
+    for_in_expression: ($) =>
+      seq(
+        "for",
+        $.quantifier,
+        sep1($.identifier, $._comma),
+        "in",
+        choice(
+          $.range,
+          seq($._lparen, sep1($._expression, $._comma), $._rparen),
+          $.identifier,
+          $.module_var_or_func
+        ),
+        $._colon,
+        $.parenthesized_expression,
       ),
 
     of_expression: ($) => seq($.quantifier, "of", $.string_set),
 
     quantifier: ($) =>
-      choice("all", "any", "none", seq($.integer_decimal_positive, "of")),
+      choice("all", "any", "none", $._expression),
 
     string_set: ($) =>
       choice(
         "them",
-        seq($._lparen, sep1($.string_identifier, $._comma), $._rparen),
+        seq($._lparen, sep1(seq($.string_identifier, optional("*")), $._comma), $._rparen),
       ),
 
     range: ($) =>
-      seq($._lparen, choice($.integer_zero, $.integer_decimal_positive), $._range2, choice($,integer_zero, $.integer_decimal_positive), $._rparen),
+      seq($._lparen, $._expression, $._range2, $._expression, $._rparen),
 
     unary_expression: ($) =>
       prec(
@@ -414,11 +422,12 @@ module.exports = grammar({
 
     identifier: (_) => /[a-zA-Z_][a-zA-Z0-9_]*/,
 
-    module_variable: ($) =>
+    module_var_or_func: ($) =>
       seq(
         $.identifier,
         ".",
         $.identifier,
+        optional(seq($._lparen, optional($._expression), $._rparen)),
       ),
 
     comment: (_) =>
