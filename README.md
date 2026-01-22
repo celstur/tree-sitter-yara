@@ -29,6 +29,6 @@ This is a fork of the original [tree-sitter-yara](https://github.com/egibs/tree-
 
 ### Semantics
 I try to do as much semantic checks as I can, without making the grammar too complex. Semantic checking is not the main objective of a parser.
----
+
 ### Testing
 So far, the parser has been tested on the example rules from the [*Writing YARA rules*](https://yara.readthedocs.io/en/stable/writingrules.html) tutorial. I am planning to test it on larger subsets of rules after in due time.
