@@ -20,6 +20,10 @@
             "named": true
           },
           {
+            "type": "float_literal",
+            "named": true
+          },
+          {
             "type": "for_in_expression",
             "named": true
           },
@@ -49,6 +53,10 @@
           },
           {
             "type": "of_expression",
+            "named": true
+          },
+          {
+            "type": "of_ruleset",
             "named": true
           },
           {
@@ -200,6 +208,10 @@
             "named": true
           },
           {
+            "type": "float_literal",
+            "named": true
+          },
+          {
             "type": "for_in_expression",
             "named": true
           },
@@ -229,6 +241,10 @@
           },
           {
             "type": "of_expression",
+            "named": true
+          },
+          {
+            "type": "of_ruleset",
             "named": true
           },
           {
@@ -301,6 +317,10 @@
           "named": true
         },
         {
+          "type": "float_literal",
+          "named": true
+        },
+        {
           "type": "for_in_expression",
           "named": true
         },
@@ -330,6 +350,10 @@
         },
         {
           "type": "of_expression",
+          "named": true
+        },
+        {
+          "type": "of_ruleset",
           "named": true
         },
         {
@@ -411,6 +435,10 @@
           "named": true
         },
         {
+          "type": "float_literal",
+          "named": true
+        },
+        {
           "type": "for_in_expression",
           "named": true
         },
@@ -440,6 +468,10 @@
         },
         {
           "type": "of_expression",
+          "named": true
+        },
+        {
+          "type": "of_ruleset",
           "named": true
         },
         {
@@ -722,6 +754,10 @@
           "named": true
         },
         {
+          "type": "float_literal",
+          "named": true
+        },
+        {
           "type": "for_in_expression",
           "named": true
         },
@@ -746,11 +782,19 @@
           "named": true
         },
         {
+          "type": "module_identifier",
+          "named": true
+        },
+        {
           "type": "module_var_or_func",
           "named": true
         },
         {
           "type": "of_expression",
+          "named": true
+        },
+        {
+          "type": "of_ruleset",
           "named": true
         },
         {
@@ -816,6 +860,25 @@
     }
   },
   {
+    "type": "of_ruleset",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "quantifier",
+          "named": true
+        },
+        {
+          "type": "rule_set",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "parenthesized_expression",
     "named": true,
     "fields": {},
@@ -833,6 +896,10 @@
         },
         {
           "type": "filesize_keyword",
+          "named": true
+        },
+        {
+          "type": "float_literal",
           "named": true
         },
         {
@@ -865,6 +932,10 @@
         },
         {
           "type": "of_expression",
+          "named": true
+        },
+        {
+          "type": "of_ruleset",
           "named": true
         },
         {
@@ -946,6 +1017,10 @@
           "named": true
         },
         {
+          "type": "float_literal",
+          "named": true
+        },
+        {
           "type": "for_in_expression",
           "named": true
         },
@@ -975,6 +1050,10 @@
         },
         {
           "type": "of_expression",
+          "named": true
+        },
+        {
+          "type": "of_ruleset",
           "named": true
         },
         {
@@ -1041,6 +1120,10 @@
           "named": true
         },
         {
+          "type": "float_literal",
+          "named": true
+        },
+        {
           "type": "for_in_expression",
           "named": true
         },
@@ -1070,6 +1153,10 @@
         },
         {
           "type": "of_expression",
+          "named": true
+        },
+        {
+          "type": "of_ruleset",
           "named": true
         },
         {
@@ -1136,6 +1223,10 @@
           "named": true
         },
         {
+          "type": "float_literal",
+          "named": true
+        },
+        {
           "type": "for_in_expression",
           "named": true
         },
@@ -1165,6 +1256,10 @@
         },
         {
           "type": "of_expression",
+          "named": true
+        },
+        {
+          "type": "of_ruleset",
           "named": true
         },
         {
@@ -1298,6 +1393,21 @@
     }
   },
   {
+    "type": "rule_set",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "rule",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "single_quoted_string",
     "named": true,
     "fields": {},
@@ -1362,6 +1472,10 @@
           "named": true
         },
         {
+          "type": "float_literal",
+          "named": true
+        },
+        {
           "type": "for_in_expression",
           "named": true
         },
@@ -1391,6 +1505,10 @@
         },
         {
           "type": "of_expression",
+          "named": true
+        },
+        {
+          "type": "of_ruleset",
           "named": true
         },
         {
@@ -1539,6 +1657,10 @@
           "named": true
         },
         {
+          "type": "float_literal",
+          "named": true
+        },
+        {
           "type": "for_in_expression",
           "named": true
         },
@@ -1568,6 +1690,10 @@
         },
         {
           "type": "of_expression",
+          "named": true
+        },
+        {
+          "type": "of_ruleset",
           "named": true
         },
         {
@@ -1672,6 +1798,10 @@
           "named": true
         },
         {
+          "type": "float_literal",
+          "named": true
+        },
+        {
           "type": "for_in_expression",
           "named": true
         },
@@ -1701,6 +1831,10 @@
         },
         {
           "type": "of_expression",
+          "named": true
+        },
+        {
+          "type": "of_ruleset",
           "named": true
         },
         {
@@ -1831,6 +1965,10 @@
             "named": true
           },
           {
+            "type": "float_literal",
+            "named": true
+          },
+          {
             "type": "for_in_expression",
             "named": true
           },
@@ -1860,6 +1998,10 @@
           },
           {
             "type": "of_expression",
+            "named": true
+          },
+          {
+            "type": "of_ruleset",
             "named": true
           },
           {
@@ -2086,6 +2228,10 @@
     "named": true
   },
   {
+    "type": "float_literal",
+    "named": true
+  },
+  {
     "type": "for",
     "named": false
   },
@@ -2174,6 +2320,10 @@
     "named": false
   },
   {
+    "type": "module_identifier",
+    "named": true
+  },
+  {
     "type": "nocase",
     "named": false
   },
@@ -2200,6 +2350,10 @@
   {
     "type": "rule",
     "named": false
+  },
+  {
+    "type": "rule",
+    "named": true
   },
   {
     "type": "startswith",

@@ -17,20 +17,18 @@ This is a fork of the original [tree-sitter-yara](https://github.com/egibs/tree-
 - [x] support for **string count in a specified range**
 - [x] support for **string presence at an offset**
 - [x] support for **string presence in a specified offset range**
-- [x] support for **variables from modules**
+- [x] support for **module variables**
 - [x] removed support for **deprecated `entrypoint` keyword**
 - [x] support for **integer-reading functions**
-- [x] support for **module functions**
+- [x] support for **module function calls**
 - [x] support for **sets of strings**
 - [x] support for **`of` and `for...of` expressions**
-- [x] support for **iterating over *ranges*, *enumerations*, *arrays* and *dictionaries* with a `for <vars> in <iterable> : ...` expression**
+- [x] support for **iterating over *ranges*, *enumerations*, *arrays* and *dictionaries* with the `for <quantifier> <variables> in <iterable> : ( <some condition using the loop variables> )` expression**
+- [x] support for **float literals**
+- [x] support for **referencing other rules**
 
 ### Semantics
-- [ ] support for **any numeric expression where it is allowed**
-- [ ] support for **any boolean expression where it is allowed**
-- [x] partial support for **correct semantic rules for the integer `0` or `[0]+` in things like *indexes* or *ranges***
-- [ ] allow **`#`, `$`, `@` and `!` to be used without *identifiers* only in the correct places**
-- [ ] support for **bitwise operators**
+I try to do as much semantic checks as I can, without making the grammar too complex. Semantic checking is not the main objective of a parser.
 ---
 ### Testing
-So far, the parser has been tested on the example rules from the [*Writing YARA rules*](https://yara.readthedocs.io/en/stable/writingrules.html) tutorial. I am planning to test it on larger subsets of rules after it is more developed.
+So far, the parser has been tested on the example rules from the [*Writing YARA rules*](https://yara.readthedocs.io/en/stable/writingrules.html) tutorial. I am planning to test it on larger subsets of rules after in due time.

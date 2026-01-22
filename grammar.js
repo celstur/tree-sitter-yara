@@ -91,7 +91,7 @@ module.exports = grammar({
         $._equal,
         field(
           "value",
-          choice($.string_literal, choice($.integer_zero, $.integer_decimal_positive), $.boolean_literal),
+          choice($.string_literal, $.integer_zero, $.integer_decimal_positive, $.boolean_literal),
         ),
       ),
 
@@ -205,6 +205,7 @@ module.exports = grammar({
         $.integer_decimal_positive,
         $.integer_zero,
         $.integer_hexadecimal,
+        $.float_literal,
         $.boolean_literal,
         $.string_literal,
         $.string_count,
@@ -217,6 +218,7 @@ module.exports = grammar({
         $.for_of_expression,
         $.for_in_expression,
         $.of_expression,
+        $.of_ruleset,
         $.parenthesized_expression,
         $.unary_expression,
         $.binary_expression,
@@ -228,7 +230,8 @@ module.exports = grammar({
 
     integer_decimal_positive: ($) => seq(/[0]*[1-9][0-9]*/, optional($.size_unit)),
     integer_zero: ($) => seq(/[0]+/, optional($.size_unit)),
-    integer_hexadecimal: ($) => /0x[0-9A-Fa-f]+/,
+    integer_hexadecimal: (_) => /0x[0-9A-Fa-f]+/,
+    float_literal: (_) => /[0-9]+\.[0-9]+/,
     hex_byte: (_) => /0x[0-9A-Fa-f]{2}|25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9]/,
     boolean_literal: (_) => choice("true", "false"),
     string_literal: ($) =>
@@ -321,7 +324,10 @@ module.exports = grammar({
       seq(
         "for",
         $.quantifier,
-        sep1($.identifier, $._comma),
+        choice(
+          sep1($.identifier, $._comma),
+          seq($._lparen, sep1($.identifier, $._comma), $._rparen),
+        ),
         "in",
         choice(
           $.range,
@@ -330,13 +336,13 @@ module.exports = grammar({
           $.module_var_or_func
         ),
         $._colon,
-        $.parenthesized_expression,
+        $.parenthesized_expression, // How do we specify boolean expressions only? Is "(elephant)" a boolean expression? Is "(elephant + 5 or giraffe)" a boolean expression?
       ),
 
     of_expression: ($) => seq($.quantifier, "of", $.string_set),
 
     quantifier: ($) =>
-      choice("all", "any", "none", $._expression),
+      choice("all", "any", "none", $._expression), // not a boolean expression
 
     string_set: ($) =>
       choice(
@@ -344,6 +350,9 @@ module.exports = grammar({
         seq($._lparen, sep1(seq($.string_identifier, optional("*")), $._comma), $._rparen),
       ),
 
+    rule_set: ($) => seq($._lparen, sep1(seq(alias($.identifier, $.rule), optional("*")), $._comma), $._rparen),
+    of_ruleset: ($) => seq($.quantifier, "of", $.rule_set),
+    
     range: ($) =>
       seq($._lparen, $._expression, $._range2, $._expression, $._rparen),
 
@@ -423,12 +432,28 @@ module.exports = grammar({
     identifier: (_) => /[a-zA-Z_][a-zA-Z0-9_]*/,
 
     module_var_or_func: ($) =>
-      seq(
-        $.identifier,
-        ".",
-        $.identifier,
-        optional(seq($._lparen, optional($._expression), $._rparen)),
+      prec.left(
+        PREC.primary,
+        seq(
+          alias($.identifier, $.module_identifier),
+          seq(
+            ".",
+            $.identifier,
+            optional(seq($._lparen, optional(sep1($._expression, $._comma)), $._rparen))
+          ),
+          repeat(
+            choice(
+              seq(
+                ".",
+                $.identifier,
+                optional(seq($._lparen, optional(sep1($._expression, $._comma)), $._rparen))
+              ),
+              seq($._lbrack, $._expression, $._rbrack)
+            )
+          )
+        )
       ),
+
 
     comment: (_) =>
       token(
