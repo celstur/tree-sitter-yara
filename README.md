@@ -26,9 +26,12 @@ This is a fork of the original [tree-sitter-yara](https://github.com/egibs/tree-
 - [x] support for **iterating over *ranges*, *enumerations*, *arrays* and *dictionaries* with the `for <quantifier> <variables> in <iterable> : ( <some condition using the loop variables> )` expression**
 - [x] support for **float literals**
 - [x] support for **referencing other rules**
+- [x] support for **bitwise operators**
 
 ### Semantics
-I try to do as much semantic checks as I can, without making the grammar too complex. Semantic checking is not the main objective of a parser.
+I try to do as much semantic checks as I can, without making the grammar too complex. Semantic checking is not the main objective of the parser.
 
 ### Testing
-So far, the parser has been tested on the example rules from the [*Writing YARA rules*](https://yara.readthedocs.io/en/stable/writingrules.html) tutorial. I am planning to test it on larger subsets of rules after in due time.
+So far, the parser has been tested on 
+- the example rules from the [*Writing YARA rules*](https://yara.readthedocs.io/en/stable/writingrules.html) tutorial
+- all rules from the [Yara-Rules](https://github.com/Yara-Rules/rules) repository

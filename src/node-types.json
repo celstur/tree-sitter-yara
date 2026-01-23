@@ -52,6 +52,10 @@
             "named": true
           },
           {
+            "type": "numeric_expression",
+            "named": true
+          },
+          {
             "type": "of_expression",
             "named": true
           },
@@ -68,6 +72,10 @@
             "named": true
           },
           {
+            "type": "regular_expression",
+            "named": true
+          },
+          {
             "type": "string_at_offset",
             "named": true
           },
@@ -76,23 +84,11 @@
             "named": true
           },
           {
-            "type": "string_count",
-            "named": true
-          },
-          {
             "type": "string_identifier",
             "named": true
           },
           {
-            "type": "string_length",
-            "named": true
-          },
-          {
             "type": "string_literal",
-            "named": true
-          },
-          {
-            "type": "string_offset",
             "named": true
           },
           {
@@ -114,6 +110,10 @@
             "named": false
           },
           {
+            "type": "&",
+            "named": false
+          },
+          {
             "type": "*",
             "named": false
           },
@@ -127,6 +127,10 @@
           },
           {
             "type": "<",
+            "named": false
+          },
+          {
+            "type": "<<",
             "named": false
           },
           {
@@ -146,7 +150,15 @@
             "named": false
           },
           {
+            "type": ">>",
+            "named": false
+          },
+          {
             "type": "\\",
+            "named": false
+          },
+          {
+            "type": "^",
             "named": false
           },
           {
@@ -170,7 +182,7 @@
             "named": false
           },
           {
-            "type": "imatches",
+            "type": "iequals",
             "named": false
           },
           {
@@ -187,6 +199,10 @@
           },
           {
             "type": "startswith",
+            "named": false
+          },
+          {
+            "type": "|",
             "named": false
           }
         ]
@@ -240,6 +256,10 @@
             "named": true
           },
           {
+            "type": "numeric_expression",
+            "named": true
+          },
+          {
             "type": "of_expression",
             "named": true
           },
@@ -256,6 +276,10 @@
             "named": true
           },
           {
+            "type": "regular_expression",
+            "named": true
+          },
+          {
             "type": "string_at_offset",
             "named": true
           },
@@ -264,23 +288,11 @@
             "named": true
           },
           {
-            "type": "string_count",
-            "named": true
-          },
-          {
             "type": "string_identifier",
             "named": true
           },
           {
-            "type": "string_length",
-            "named": true
-          },
-          {
             "type": "string_literal",
-            "named": true
-          },
-          {
-            "type": "string_offset",
             "named": true
           },
           {
@@ -349,6 +361,10 @@
           "named": true
         },
         {
+          "type": "numeric_expression",
+          "named": true
+        },
+        {
           "type": "of_expression",
           "named": true
         },
@@ -365,6 +381,10 @@
           "named": true
         },
         {
+          "type": "regular_expression",
+          "named": true
+        },
+        {
           "type": "string_at_offset",
           "named": true
         },
@@ -373,23 +393,11 @@
           "named": true
         },
         {
-          "type": "string_count",
-          "named": true
-        },
-        {
           "type": "string_identifier",
           "named": true
         },
         {
-          "type": "string_length",
-          "named": true
-        },
-        {
           "type": "string_literal",
-          "named": true
-        },
-        {
-          "type": "string_offset",
           "named": true
         },
         {
@@ -467,6 +475,10 @@
           "named": true
         },
         {
+          "type": "numeric_expression",
+          "named": true
+        },
+        {
           "type": "of_expression",
           "named": true
         },
@@ -491,6 +503,10 @@
           "named": true
         },
         {
+          "type": "regular_expression",
+          "named": true
+        },
+        {
           "type": "string_at_offset",
           "named": true
         },
@@ -499,23 +515,11 @@
           "named": true
         },
         {
-          "type": "string_count",
-          "named": true
-        },
-        {
           "type": "string_identifier",
           "named": true
         },
         {
-          "type": "string_length",
-          "named": true
-        },
-        {
           "type": "string_literal",
-          "named": true
-        },
-        {
-          "type": "string_offset",
           "named": true
         },
         {
@@ -552,6 +556,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "hex_jump",
+          "named": true
+        },
         {
           "type": "hex_seq",
           "named": true
@@ -591,6 +599,10 @@
       "required": true,
       "types": [
         {
+          "type": "hex_jump",
+          "named": true
+        },
+        {
           "type": "hex_string_byte",
           "named": true
         }
@@ -629,7 +641,7 @@
       "required": true,
       "types": [
         {
-          "type": "string_literal",
+          "type": "double_quoted_string",
           "named": true
         }
       ]
@@ -644,7 +656,7 @@
       "required": true,
       "types": [
         {
-          "type": "string_literal",
+          "type": "double_quoted_string",
           "named": true
         }
       ]
@@ -790,6 +802,10 @@
           "named": true
         },
         {
+          "type": "numeric_expression",
+          "named": true
+        },
+        {
           "type": "of_expression",
           "named": true
         },
@@ -806,6 +822,10 @@
           "named": true
         },
         {
+          "type": "regular_expression",
+          "named": true
+        },
+        {
           "type": "string_at_offset",
           "named": true
         },
@@ -814,15 +834,7 @@
           "named": true
         },
         {
-          "type": "string_count",
-          "named": true
-        },
-        {
           "type": "string_identifier",
-          "named": true
-        },
-        {
-          "type": "string_length",
           "named": true
         },
         {
@@ -830,11 +842,109 @@
           "named": true
         },
         {
-          "type": "string_offset",
+          "type": "unary_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "numeric_expression",
+    "named": true,
+    "fields": {
+      "operator": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "%",
+            "named": false
+          },
+          {
+            "type": "&",
+            "named": false
+          },
+          {
+            "type": "*",
+            "named": false
+          },
+          {
+            "type": "+",
+            "named": false
+          },
+          {
+            "type": "-",
+            "named": false
+          },
+          {
+            "type": "<<",
+            "named": false
+          },
+          {
+            "type": ">>",
+            "named": false
+          },
+          {
+            "type": "\\",
+            "named": false
+          },
+          {
+            "type": "^",
+            "named": false
+          },
+          {
+            "type": "|",
+            "named": false
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "float_literal",
           "named": true
         },
         {
-          "type": "unary_expression",
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "integer_decimal_positive",
+          "named": true
+        },
+        {
+          "type": "integer_hexadecimal",
+          "named": true
+        },
+        {
+          "type": "integer_zero",
+          "named": true
+        },
+        {
+          "type": "module_var_or_func",
+          "named": true
+        },
+        {
+          "type": "numeric_expression",
+          "named": true
+        },
+        {
+          "type": "read_function_call",
+          "named": true
+        },
+        {
+          "type": "string_count",
+          "named": true
+        },
+        {
+          "type": "string_length",
+          "named": true
+        },
+        {
+          "type": "string_offset",
           "named": true
         }
       ]
@@ -931,6 +1041,10 @@
           "named": true
         },
         {
+          "type": "numeric_expression",
+          "named": true
+        },
+        {
           "type": "of_expression",
           "named": true
         },
@@ -947,6 +1061,10 @@
           "named": true
         },
         {
+          "type": "regular_expression",
+          "named": true
+        },
+        {
           "type": "string_at_offset",
           "named": true
         },
@@ -955,15 +1073,7 @@
           "named": true
         },
         {
-          "type": "string_count",
-          "named": true
-        },
-        {
           "type": "string_identifier",
-          "named": true
-        },
-        {
-          "type": "string_length",
           "named": true
         },
         {
@@ -971,26 +1081,7 @@
           "named": true
         },
         {
-          "type": "string_offset",
-          "named": true
-        },
-        {
           "type": "unary_expression",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "pattern",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "escape_sequence",
           "named": true
         }
       ]
@@ -1005,95 +1096,7 @@
       "required": false,
       "types": [
         {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
-          "type": "boolean_literal",
-          "named": true
-        },
-        {
-          "type": "filesize_keyword",
-          "named": true
-        },
-        {
-          "type": "float_literal",
-          "named": true
-        },
-        {
-          "type": "for_in_expression",
-          "named": true
-        },
-        {
-          "type": "for_of_expression",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "integer_decimal_positive",
-          "named": true
-        },
-        {
-          "type": "integer_hexadecimal",
-          "named": true
-        },
-        {
-          "type": "integer_zero",
-          "named": true
-        },
-        {
-          "type": "module_var_or_func",
-          "named": true
-        },
-        {
-          "type": "of_expression",
-          "named": true
-        },
-        {
-          "type": "of_ruleset",
-          "named": true
-        },
-        {
-          "type": "parenthesized_expression",
-          "named": true
-        },
-        {
-          "type": "read_function_call",
-          "named": true
-        },
-        {
-          "type": "string_at_offset",
-          "named": true
-        },
-        {
-          "type": "string_at_range",
-          "named": true
-        },
-        {
-          "type": "string_count",
-          "named": true
-        },
-        {
-          "type": "string_identifier",
-          "named": true
-        },
-        {
-          "type": "string_length",
-          "named": true
-        },
-        {
-          "type": "string_literal",
-          "named": true
-        },
-        {
-          "type": "string_offset",
-          "named": true
-        },
-        {
-          "type": "unary_expression",
+          "type": "numeric_expression",
           "named": true
         }
       ]
@@ -1108,95 +1111,7 @@
       "required": true,
       "types": [
         {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
-          "type": "boolean_literal",
-          "named": true
-        },
-        {
-          "type": "filesize_keyword",
-          "named": true
-        },
-        {
-          "type": "float_literal",
-          "named": true
-        },
-        {
-          "type": "for_in_expression",
-          "named": true
-        },
-        {
-          "type": "for_of_expression",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "integer_decimal_positive",
-          "named": true
-        },
-        {
-          "type": "integer_hexadecimal",
-          "named": true
-        },
-        {
-          "type": "integer_zero",
-          "named": true
-        },
-        {
-          "type": "module_var_or_func",
-          "named": true
-        },
-        {
-          "type": "of_expression",
-          "named": true
-        },
-        {
-          "type": "of_ruleset",
-          "named": true
-        },
-        {
-          "type": "parenthesized_expression",
-          "named": true
-        },
-        {
-          "type": "read_function_call",
-          "named": true
-        },
-        {
-          "type": "string_at_offset",
-          "named": true
-        },
-        {
-          "type": "string_at_range",
-          "named": true
-        },
-        {
-          "type": "string_count",
-          "named": true
-        },
-        {
-          "type": "string_identifier",
-          "named": true
-        },
-        {
-          "type": "string_length",
-          "named": true
-        },
-        {
-          "type": "string_literal",
-          "named": true
-        },
-        {
-          "type": "string_offset",
-          "named": true
-        },
-        {
-          "type": "unary_expression",
+          "type": "numeric_expression",
           "named": true
         }
       ]
@@ -1211,99 +1126,11 @@
       "required": true,
       "types": [
         {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
-          "type": "boolean_literal",
-          "named": true
-        },
-        {
-          "type": "filesize_keyword",
-          "named": true
-        },
-        {
-          "type": "float_literal",
-          "named": true
-        },
-        {
-          "type": "for_in_expression",
-          "named": true
-        },
-        {
-          "type": "for_of_expression",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "integer_decimal_positive",
-          "named": true
-        },
-        {
-          "type": "integer_hexadecimal",
-          "named": true
-        },
-        {
-          "type": "integer_zero",
-          "named": true
-        },
-        {
-          "type": "module_var_or_func",
-          "named": true
-        },
-        {
-          "type": "of_expression",
-          "named": true
-        },
-        {
-          "type": "of_ruleset",
-          "named": true
-        },
-        {
-          "type": "parenthesized_expression",
-          "named": true
-        },
-        {
-          "type": "read_function_call",
+          "type": "numeric_expression",
           "named": true
         },
         {
           "type": "read_function_name",
-          "named": true
-        },
-        {
-          "type": "string_at_offset",
-          "named": true
-        },
-        {
-          "type": "string_at_range",
-          "named": true
-        },
-        {
-          "type": "string_count",
-          "named": true
-        },
-        {
-          "type": "string_identifier",
-          "named": true
-        },
-        {
-          "type": "string_length",
-          "named": true
-        },
-        {
-          "type": "string_literal",
-          "named": true
-        },
-        {
-          "type": "string_offset",
-          "named": true
-        },
-        {
-          "type": "unary_expression",
           "named": true
         }
       ]
@@ -1323,11 +1150,26 @@
       "required": true,
       "types": [
         {
-          "type": "pattern",
+          "type": "regular_expression",
           "named": true
         },
         {
           "type": "string_modifiers",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "regular_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "escape_sequence",
           "named": true
         }
       ]
@@ -1460,47 +1302,7 @@
       "required": true,
       "types": [
         {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
-          "type": "boolean_literal",
-          "named": true
-        },
-        {
-          "type": "filesize_keyword",
-          "named": true
-        },
-        {
-          "type": "float_literal",
-          "named": true
-        },
-        {
-          "type": "for_in_expression",
-          "named": true
-        },
-        {
-          "type": "for_of_expression",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "integer_decimal_positive",
-          "named": true
-        },
-        {
-          "type": "integer_hexadecimal",
-          "named": true
-        },
-        {
-          "type": "integer_zero",
-          "named": true
-        },
-        {
-          "type": "module_var_or_func",
+          "type": "numeric_expression",
           "named": true
         },
         {
@@ -1508,47 +1310,7 @@
           "named": true
         },
         {
-          "type": "of_ruleset",
-          "named": true
-        },
-        {
-          "type": "parenthesized_expression",
-          "named": true
-        },
-        {
-          "type": "read_function_call",
-          "named": true
-        },
-        {
-          "type": "string_at_offset",
-          "named": true
-        },
-        {
-          "type": "string_at_range",
-          "named": true
-        },
-        {
-          "type": "string_count",
-          "named": true
-        },
-        {
           "type": "string_identifier",
-          "named": true
-        },
-        {
-          "type": "string_length",
-          "named": true
-        },
-        {
-          "type": "string_literal",
-          "named": true
-        },
-        {
-          "type": "string_offset",
-          "named": true
-        },
-        {
-          "type": "unary_expression",
           "named": true
         }
       ]
@@ -1645,95 +1407,7 @@
       "required": false,
       "types": [
         {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
-          "type": "boolean_literal",
-          "named": true
-        },
-        {
-          "type": "filesize_keyword",
-          "named": true
-        },
-        {
-          "type": "float_literal",
-          "named": true
-        },
-        {
-          "type": "for_in_expression",
-          "named": true
-        },
-        {
-          "type": "for_of_expression",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "integer_decimal_positive",
-          "named": true
-        },
-        {
-          "type": "integer_hexadecimal",
-          "named": true
-        },
-        {
-          "type": "integer_zero",
-          "named": true
-        },
-        {
-          "type": "module_var_or_func",
-          "named": true
-        },
-        {
-          "type": "of_expression",
-          "named": true
-        },
-        {
-          "type": "of_ruleset",
-          "named": true
-        },
-        {
-          "type": "parenthesized_expression",
-          "named": true
-        },
-        {
-          "type": "read_function_call",
-          "named": true
-        },
-        {
-          "type": "string_at_offset",
-          "named": true
-        },
-        {
-          "type": "string_at_range",
-          "named": true
-        },
-        {
-          "type": "string_count",
-          "named": true
-        },
-        {
-          "type": "string_identifier",
-          "named": true
-        },
-        {
-          "type": "string_length",
-          "named": true
-        },
-        {
-          "type": "string_literal",
-          "named": true
-        },
-        {
-          "type": "string_offset",
-          "named": true
-        },
-        {
-          "type": "unary_expression",
+          "type": "numeric_expression",
           "named": true
         }
       ]
@@ -1786,95 +1460,7 @@
       "required": false,
       "types": [
         {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
-          "type": "boolean_literal",
-          "named": true
-        },
-        {
-          "type": "filesize_keyword",
-          "named": true
-        },
-        {
-          "type": "float_literal",
-          "named": true
-        },
-        {
-          "type": "for_in_expression",
-          "named": true
-        },
-        {
-          "type": "for_of_expression",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "integer_decimal_positive",
-          "named": true
-        },
-        {
-          "type": "integer_hexadecimal",
-          "named": true
-        },
-        {
-          "type": "integer_zero",
-          "named": true
-        },
-        {
-          "type": "module_var_or_func",
-          "named": true
-        },
-        {
-          "type": "of_expression",
-          "named": true
-        },
-        {
-          "type": "of_ruleset",
-          "named": true
-        },
-        {
-          "type": "parenthesized_expression",
-          "named": true
-        },
-        {
-          "type": "read_function_call",
-          "named": true
-        },
-        {
-          "type": "string_at_offset",
-          "named": true
-        },
-        {
-          "type": "string_at_range",
-          "named": true
-        },
-        {
-          "type": "string_count",
-          "named": true
-        },
-        {
-          "type": "string_identifier",
-          "named": true
-        },
-        {
-          "type": "string_length",
-          "named": true
-        },
-        {
-          "type": "string_literal",
-          "named": true
-        },
-        {
-          "type": "string_offset",
-          "named": true
-        },
-        {
-          "type": "unary_expression",
+          "type": "numeric_expression",
           "named": true
         }
       ]
@@ -1924,21 +1510,6 @@
         },
         {
           "type": "tag",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "text_string",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "text_string_esc_seq",
           "named": true
         }
       ]
@@ -1997,6 +1568,10 @@
             "named": true
           },
           {
+            "type": "numeric_expression",
+            "named": true
+          },
+          {
             "type": "of_expression",
             "named": true
           },
@@ -2013,6 +1588,10 @@
             "named": true
           },
           {
+            "type": "regular_expression",
+            "named": true
+          },
+          {
             "type": "string_at_offset",
             "named": true
           },
@@ -2021,23 +1600,11 @@
             "named": true
           },
           {
-            "type": "string_count",
-            "named": true
-          },
-          {
             "type": "string_identifier",
             "named": true
           },
           {
-            "type": "string_length",
-            "named": true
-          },
-          {
             "type": "string_literal",
-            "named": true
-          },
-          {
-            "type": "string_offset",
             "named": true
           },
           {
@@ -2059,6 +1626,10 @@
             "named": false
           },
           {
+            "type": "not defined",
+            "named": false
+          },
+          {
             "type": "~",
             "named": false
           }
@@ -2076,6 +1647,10 @@
   },
   {
     "type": "%",
+    "named": false
+  },
+  {
+    "type": "&",
     "named": false
   },
   {
@@ -2127,6 +1702,10 @@
     "named": false
   },
   {
+    "type": "<<",
+    "named": false
+  },
+  {
     "type": "<=",
     "named": false
   },
@@ -2144,6 +1723,10 @@
   },
   {
     "type": ">=",
+    "named": false
+  },
+  {
+    "type": ">>",
     "named": false
   },
   {
@@ -2168,6 +1751,10 @@
   },
   {
     "type": "]",
+    "named": false
+  },
+  {
+    "type": "^",
     "named": false
   },
   {
@@ -2264,7 +1851,7 @@
     "named": false
   },
   {
-    "type": "imatches",
+    "type": "iequals",
     "named": false
   },
   {
@@ -2336,6 +1923,10 @@
     "named": false
   },
   {
+    "type": "not defined",
+    "named": false
+  },
+  {
     "type": "of",
     "named": false
   },
@@ -2349,11 +1940,11 @@
   },
   {
     "type": "rule",
-    "named": false
+    "named": true
   },
   {
     "type": "rule",
-    "named": true
+    "named": false
   },
   {
     "type": "startswith",
@@ -2372,7 +1963,7 @@
     "named": true
   },
   {
-    "type": "text_string_esc_seq",
+    "type": "text_string",
     "named": true
   },
   {
