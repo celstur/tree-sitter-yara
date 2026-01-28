@@ -35,3 +35,7 @@ I try to do as much semantic checks as I can, without making the grammar too com
 So far, the parser has been tested on 
 - the example rules from the [*Writing YARA rules*](https://yara.readthedocs.io/en/stable/writingrules.html) tutorial
 - all rules from the [Yara-Rules](https://github.com/Yara-Rules/rules) repository
+
+### To do:
+- [ ] figure out rules for ***not***, ***defined*** operators
+- [ ] improve documentation

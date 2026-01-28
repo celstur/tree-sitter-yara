@@ -31,7 +31,8 @@ module.exports = grammar({
   word: ($) => $.identifier,
 
   conflicts: ($) => [
-    [$._expression, $.numeric_expression],
+    [$._expression, $._numeric_expression],
+    [$._expression, $.parenthesized_numeric_expression]
   ],
 
   rules: {
@@ -134,13 +135,16 @@ module.exports = grammar({
     hex_string: ($) =>
       seq(
         $._lbrace,
-        repeat1(
-          choice($.hex_string_byte, $.hex_jump, $.hex_alternative),
+        choice($.hex_seq, $.hex_alternative),
+        repeat(
+          seq(choice(
+            choice($.hex_seq, $.hex_alternative),
+            seq($.hex_jump, choice($.hex_seq, $.hex_alternative))
+          ))
         ),
-        $._rbrace,
+        $._rbrace
       ),
-    hex_string_byte: (_) => /~?[0-9a-fA-F?]{2}/,
-    hex_seq: ($) => seq(choice($.hex_string_byte, $.hex_jump), repeat1(choice($.hex_string_byte, $.hex_jump))),
+    hex_seq: (_) => token(/(?:~?[0-9A-Fa-f?]{2})(?:\s*~?[0-9A-Fa-f?]{2})*/),
     hex_jump: ($) =>
       seq(
         $._lbrack,
@@ -156,7 +160,7 @@ module.exports = grammar({
         $._rbrack
       ),
     hex_alternative: ($) =>
-      seq($._lparen, sep1(choice($.hex_string_byte, $.hex_jump, $.hex_seq), $._pipe), $._rparen),
+      seq($._lparen, sep1($.hex_seq, $._pipe), $._rparen),
 
     regex_string: ($) =>
       prec.right(
@@ -209,7 +213,7 @@ module.exports = grammar({
 
     _expression: ($) =>
       choice(
-        $.numeric_expression,
+        $._numeric_expression,
         $.identifier,
         $.string_identifier,
         $.module_var_or_func,
@@ -243,8 +247,12 @@ module.exports = grammar({
     float_literal: (_) => /[0-9]+\.[0-9]+/,
     hex_byte: (_) => /0x[0-9A-Fa-f]{2}|25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9]/,
     boolean_literal: (_) => choice("true", "false"),
+
     string_literal: ($) =>
       choice($.double_quoted_string, $.single_quoted_string),
+
+    string_expression: ($) =>
+      choice($.string_literal, $.string_identifier, $.module_var_or_func, $.read_function_call),
 
     double_quoted_string: ($) =>
       seq(
@@ -282,7 +290,7 @@ module.exports = grammar({
       choice(
         seq(
           token(/@[a-zA-Z_][a-zA-Z0-9_]*/),
-          optional(seq($._lbrack, $.numeric_expression, $._rbrack))
+          optional(seq($._lbrack, $._numeric_expression, $._rbrack))
         ),
         token(/@/)
       ),
@@ -292,7 +300,7 @@ module.exports = grammar({
         seq(
           choice($.string_identifier, $.of_expression),
           "at",
-          $.numeric_expression
+          $._numeric_expression
         )
       ),
     string_at_range: ($) =>
@@ -308,7 +316,7 @@ module.exports = grammar({
       choice(
         seq(
           token(/![a-zA-Z_][a-zA-Z0-9_]*/),
-          optional(seq($._lbrack, $.numeric_expression, $._rbrack))
+          optional(seq($._lbrack, $._numeric_expression, $._rbrack))
         ),
         token(/!/)
       ),
@@ -319,7 +327,7 @@ module.exports = grammar({
       "int8be", "int16be", "int32be",
       "uint8be", "uint16be", "uint32be",
     ),
-    read_function_call: ($) => seq($.read_function_name, $._lparen, $.numeric_expression, $._rparen),
+    read_function_call: ($) => seq($.read_function_name, $._lparen, $._numeric_expression, $._rparen),
 
     for_of_expression: ($) =>
       seq(
@@ -355,9 +363,9 @@ module.exports = grammar({
       ),
 
     quantifier: ($) =>
-      choice("all", "any", "none", $.numeric_expression),
+      choice("all", "any", "none", $._numeric_expression),
 
-    numeric_expression: ($) =>
+    _numeric_expression: ($) =>
       choice(
         $.integer_decimal_positive,
         $.integer_zero,
@@ -369,13 +377,14 @@ module.exports = grammar({
         $.string_count,
         $.string_offset,
         $.string_length,
-        seq($._lparen, $.numeric_expression, $._rparen),
-        prec.left(PREC.multiplicative, seq($.numeric_expression, field("operator", choice("*", "\\", "%")), $.numeric_expression)),
-        prec.left(PREC.additive, seq($.numeric_expression, field("operator", choice("+", "-")), $.numeric_expression)),
-        prec.left(PREC.bit_shift, seq($.numeric_expression, field("operator", choice("<<", ">>")), $.numeric_expression)),
-        prec.left(PREC.bit_and, seq($.numeric_expression, field("operator", "&"), $.numeric_expression)),
-        prec.left(PREC.bit_xor, seq($.numeric_expression, field("operator", "^"), $.numeric_expression)),
-        prec.left(PREC.bit_or, seq($.numeric_expression, field("operator", "|"), $.numeric_expression))
+        $.filesize_keyword,
+        $.parenthesized_numeric_expression,
+        prec.left(PREC.multiplicative, seq($._numeric_expression, field("operator", choice("*", "\\", "%")), $._numeric_expression)),
+        prec.left(PREC.additive, seq($._numeric_expression, field("operator", choice("+", "-")), $._numeric_expression)),
+        prec.left(PREC.bit_shift, seq($._numeric_expression, field("operator", choice("<<", ">>")), $._numeric_expression)),
+        prec.left(PREC.bit_and, seq($._numeric_expression, field("operator", "&"), $._numeric_expression)),
+        prec.left(PREC.bit_xor, seq($._numeric_expression, field("operator", "^"), $._numeric_expression)),
+        prec.left(PREC.bit_or, seq($._numeric_expression, field("operator", "|"), $._numeric_expression))
       ),
 
     string_set: ($) =>
@@ -392,7 +401,7 @@ module.exports = grammar({
       ),
     
     range: ($) =>
-      seq($._lparen, $.numeric_expression, $._range2, $.numeric_expression, $._rparen),
+      seq($._lparen, $._numeric_expression, $._range2, $._numeric_expression, $._rparen),
 
     unary_expression: ($) =>
       choice(
@@ -415,57 +424,9 @@ module.exports = grammar({
     binary_expression: ($) =>
       choice(
         prec.left(
-          PREC.multiplicative,
-          seq(
-            field("left", $._expression),
-            field("operator", choice("*", "\\", "%")),
-            field("right", $._expression),
-          ),
-        ),
-        prec.left(
-          PREC.additive,
-          seq(
-            field("left", $._expression),
-            field("operator", choice("+", "-")),
-            field("right", $._expression),
-          ),
-        ),
-        prec.left(
-          PREC.bit_shift,
-          seq(
-            field("left", $._expression),
-            field("operator", choice("<<", ">>")),
-            field("right", $._expression),
-          ),
-        ),
-        prec.left(
-          PREC.bit_and,
-          seq(
-            field("left", $._expression),
-            field("operator", "&"),
-            field("right", $._expression),
-          ),
-        ),
-        prec.left(
-          PREC.bit_xor,
-          seq(
-            field("left", $._expression),
-            field("operator", "^"),
-            field("right", $._expression),
-          ),
-        ),
-        prec.left(
-          PREC.bit_or,
-          seq(
-            field("left", $._expression),
-            field("operator", "|"),
-            field("right", $._expression),
-          ),
-        ),
-        prec.left(
           PREC.comparative,
           seq(
-            field("left", $._expression),
+            field("left", $._numeric_expression),
             field(
               "operator",
               choice(
@@ -475,7 +436,7 @@ module.exports = grammar({
                 ">=",
               ),
             ),
-            field("right", $._expression),
+            field("right", $._numeric_expression),
           ),
         ),
         prec.left(
@@ -495,7 +456,7 @@ module.exports = grammar({
         prec.left(
           PREC.equality,
           seq(
-            field("left", choice($.string_literal, $.string_identifier, $.module_var_or_func, $.identifier)),
+            field("left", $.string_expression),
             field(
               "operator",
               choice(
@@ -508,13 +469,13 @@ module.exports = grammar({
                 "iequals",
               ),
             ),
-            field("right", choice($.string_literal, $.string_identifier, $.module_var_or_func, $.identifier)),
+            field("right", $.string_expression),
           ),
         ),
         prec.left(
           PREC.equality,
           seq(
-            field("left", choice($.string_literal, $.string_identifier, $.module_var_or_func, $.identifier)),
+            field("left", $.string_expression),
             field("operator", "matches"),
             field("right", $.regular_expression),
           ),
@@ -538,6 +499,7 @@ module.exports = grammar({
       ),
 
     parenthesized_expression: ($) => seq($._lparen, $._expression, $._rparen),
+    parenthesized_numeric_expression: ($) => seq($._lparen, $._numeric_expression, $._rparen),
 
     identifier: (_) => /[a-zA-Z_][a-zA-Z0-9_]*/,
 
