@@ -18,7 +18,7 @@ const PREC = {
   bit_or: 6,
   comparative: 5,
   equality: 4,
-  not_defined: 3,
+  defined: 3,
   and: 2,
   or: 1,
 };
@@ -173,7 +173,7 @@ module.exports = grammar({
     regular_expression: ($) =>
       seq(
         "/",
-        repeat1(choice(token.immediate(/[^\/\\]+/), $.escape_sequence)),
+        field("pattern", repeat1(choice(token.immediate(/[^\/\\]+/), $.escape_sequence))),
         "/",
         optional(token(/i|s|is|si/))
       ),
@@ -327,7 +327,7 @@ module.exports = grammar({
       "int8be", "int16be", "int32be",
       "uint8be", "uint16be", "uint32be",
     ),
-    read_function_call: ($) => seq($.read_function_name, $._lparen, $._numeric_expression, $._rparen),
+    read_function_call: ($) => seq(field("name", $.read_function_name), $._lparen, field("argument", $._numeric_expression), $._rparen),
 
     for_of_expression: ($) =>
       seq(
@@ -413,9 +413,9 @@ module.exports = grammar({
           ),
         ),
         prec(
-          PREC.not_defined,
+          PREC.defined,
           seq(
-            field("operator", "not defined"),
+            field("operator", "defined"),
             field("operand", $._expression),
           ),
         ),
@@ -507,18 +507,18 @@ module.exports = grammar({
       prec.left(
         PREC.primary,
         seq(
-          alias($.identifier, $.module_identifier),
+          field("module_name", alias($.identifier, $.module_identifier)),
           seq(
             ".",
-            $.identifier,
-            optional(seq($._lparen, optional(sep1($._expression, $._comma)), $._rparen))
+            field("name", $.identifier),
+            optional(seq($._lparen, field("argument", optional(sep1($._expression, $._comma))), $._rparen))
           ),
           repeat(
             choice(
               seq(
                 ".",
-                $.identifier,
-                optional(seq($._lparen, optional(sep1($._expression, $._comma)), $._rparen))
+                field("name", $.identifier),
+                optional(seq($._lparen, field("argument", optional(sep1($._expression, $._comma))), $._rparen))
               ),
               seq($._lbrack, $._expression, $._rbrack)
             )

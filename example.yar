@@ -30,5 +30,5 @@ rule DEMO2 : trojan loader
     #sig in (0..filesize) >= 1 and $sig in (100..2000) and $magic at 0 and
     for any i in (0..#sig - 1) : (@sig[i] < filesize) and
     for any sec in pe.sections : (sec.virtual_size > 1000 and
-    (sec.characteristics & 0x20000000) != 0) and DEMO1
+    (sec.characteristics & 0x20000000) != 0) and DEMO1 or not defined pe.entry_point
 }

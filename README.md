@@ -27,6 +27,7 @@ This is a fork of the original [tree-sitter-yara](https://github.com/egibs/tree-
 - [x] support for **float literals**
 - [x] support for **referencing other rules**
 - [x] support for **bitwise operators**
+- [x] support for **`defined`** operator
 
 ### Semantics
 I try to do as much semantic checks as I can, without making the grammar too complex. Semantic checking is not the main objective of the parser.
@@ -37,5 +38,4 @@ So far, the parser has been tested on
 - all rules from the [Yara-Rules](https://github.com/Yara-Rules/rules) repository
 
 ### To do:
-- [ ] figure out rules for ***not***, ***defined*** operators
 - [ ] improve documentation
