@@ -1,137 +1,123 @@
-; Comments
-(comment) @comment
+; tree-sitter-yara: highlights.scm
+    ; Designed for the current grammar.js in this repository.
 
-; Keywords
-[
-  "global"
-  "import"
-  "private"
-] @constant.builtin
+    ; Comments
+    (comment) @comment
 
-[
-  "rule"
-] @function
+    ; Top-level / structural keywords
+    "import" @keyword
+    "include" @keyword
+    "rule" @keyword
+    "private" @keyword
+    "global" @keyword
+    "meta" @keyword
+    "strings" @keyword
+    "condition" @keyword
 
-[
-  "meta"
-  "strings"
-  "condition"
-] @property
+    ; Condition keywords / operators
+    "for" @keyword
+    "in" @keyword
+    "of" @keyword
+    "all" @keyword
+    "any" @keyword
+    "none" @keyword
+    "defined" @keyword
+    "not" @keyword
 
-; Operators
-[
-  "matches"
-  "contains"
-  "icontains"
-  "imatches"
-  "startswith"
-  "istartswith"
-  "endswith"
-  "iendswith"
-  "and"
-  "or"
-  "not"
-  "=="
-  "!="
-  "<"
-  ">"
-  ">="
-  "<="
-  "of"
-  "for"
-  "all"
-  "any"
-  "none"
-  "in"
-] @string.special
+    "and" @operator
+    "or" @operator
+    "matches" @operator
+    "contains" @operator
+    "icontains" @operator
+    "startswith" @operator
+    "istartswith" @operator
+    "endswith" @operator
+    "iendswith" @operator
+    "iequals" @operator
 
-; String modifiers
-[
-  "wide"
-  "ascii"
-  "nocase"
-  "fullword"
-  "xor"
-  "base64"
-  "base64wide"
-] @keyword.modifier
+    "==" @operator
+    "!=" @operator
+    "<" @operator
+    ">" @operator
+    "<=" @operator
+    ">=" @operator
+    "&" @operator
+    "|" @operator
+    "^" @operator
+    "~" @operator
+    "+" @operator
+    "-" @operator
+    "*" @operator
+    "/" @operator
+    "%" @operator
 
-; Numbers and sizes
-(integer_literal) @constant.numeric
-(size_unit) @constant.numeric
+    "at" @operator
 
-; Strings
-(double_quoted_string) @string
-(single_quoted_string) @string
-(escape_sequence) @string.escape
-(text_string) @text.literal
+    ; Built-ins / literals
+    (filesize_keyword) @constant.builtin
+    (boolean_literal) @constant.builtin
+    (read_function_name) @function.builtin
+    (size_unit) @constant
+    (integer_decimal_positive) @number
+    (integer_zero) @number
+    (integer_hexadecimal) @number
+    (float_literal) @number
 
-; Hex strings
-(hex_string) @string.special
-(hex_byte) @constant.numeric
-(hex_wildcard) @constant.builtin
-(hex_jump) @constant.numeric
+    ; Strings
+    (double_quoted_string) @string
+    (single_quoted_string) @string
+    (text_string) @string
+    (escape_sequence) @string.escape
+    (regular_expression) @string.regexp
 
-; Regular expressions
-(regex_string) @string.regexp
-(pattern) @string.regexp
+    ; Hex strings / hex components
+    (hex_seq) @constant.numeric
+    (hex_jump) @constant.numeric
+    (hex_byte) @constant.numeric
 
-; Boolean literals
-[
-  "true"
-  "false"
-] @constant.boolean
+    ; Identifiers / names
+    (rule_definition
+      name: (identifier) @function)
 
-; Keywords and special identifiers
-[
-  "them"
-  "all"
-  "any"
-  "none"
-] @keyword.operator
+    (string_definition
+      name: (string_identifier) @variable.builtin)
 
+    (meta_definition
+      key: (identifier) @property)
 
-; String identifiers
-"$" @string.special.symbol
-(identifier) @string
-(string_identifier) @string.special.symbol
+    (module_var_or_func
+      module_name: (module_identifier) @namespace
+      name: (identifier) @property)
 
-; Built-ins
-[
-  (filesize_keyword)
-  (entrypoint_keyword)
-] @constant.builtin
+    (module_identifier) @namespace
+    (identifier) @variable
+    (string_identifier) @variable.builtin
 
-; Tags
-(tag_list
-  [(identifier) (tag)] @tag)
+    ; Tags
+    (tag) @tag
 
-; Punctuation and delimiters
-[
-  "="
-  ":"
-  "{"
-  "}"
-  "["
-  "]"
-  "("
-  ")"
-  "#"
-  "@"
-  ".."
-  "|"
-  ","
-  "!"
-  "/"
-  "\""
-  "'"
-  "*"
-] @string.special.symbol
+    ; Modifiers
+    "nocase" @keyword.modifier
+    "ascii" @keyword.modifier
+    "wide" @keyword.modifier
+    "fullword" @keyword.modifier
+    "xor" @keyword.modifier
+    "base64" @keyword.modifier
+    "base64wide" @keyword.modifier
+    "private" @keyword.modifier
 
-; Rule names
-(rule_definition
-  name: (identifier) @string.special)
-
-; Meta definitions
-(meta_definition
-  key: (identifier) @string.special)
+    ; Punctuation / delimiters
+    [
+      "="
+      ":"
+      "{"
+      "}"
+      "["
+      "]"
+      "("
+      ")"
+      ","
+      "|"
+      "."
+      ".."
+    ] @punctuation.delimiter

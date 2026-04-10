@@ -4,11 +4,20 @@
       "name": "yara",
       "camelcase": "Yara",
       "scope": "source.yara",
-      "file-types": ["yara", "yar"],
+      "file-types": [
+        "yara",
+        "yar"
+      ],
       "injection-regex": "^yara$",
-      "highlights": ["queries/highlights.scm"],
-      "injections": ["queries/injections.scm"],
-      "locals": ["queries/locals.scm"]
+      "highlights": [
+        "queries/highlights.scm"
+      ],
+      "injections": [
+        "queries/injections.scm"
+      ],
+      "locals": [
+        "queries/locals.scm"
+      ]
     }
   ],
   "metadata": {

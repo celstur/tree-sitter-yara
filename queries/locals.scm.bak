@@ -1,0 +1,37 @@
+; tree-sitter-yara: locals.scm
+    ; Keep this conservative: only capture names that are actually reused in rules.
+
+    (source_file) @local.scope
+    (rule_definition) @local.scope
+    (for_in_expression) @local.scope
+
+    (rule_definition
+      name: (identifier) @local.definition)
+
+    (string_definition
+      name: (string_identifier) @local.definition)
+
+    ; References to defined strings in condition contexts
+    (string_count
+      (string_identifier) @local.reference)
+
+    (string_offset
+      (string_identifier) @local.reference)
+
+    (string_length
+      (string_identifier) @local.reference)
+
+    (string_at_offset
+      (string_identifier) @local.reference)
+
+    (string_at_range
+      (string_identifier) @local.reference)
+
+    (of_expression
+      (string_set
+        (string_identifier) @local.reference))
+
+    ; Rule references in set expressions
+    (of_ruleset
+      (rule_set
+        (rule) @local.reference))
