@@ -202,8 +202,13 @@
           "name": "_colon"
         },
         {
-          "type": "SYMBOL",
-          "name": "identifier"
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          },
+          "named": true,
+          "value": "tag"
         },
         {
           "type": "REPEAT",
@@ -674,8 +679,29 @@
           "type": "SEQ",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "hex_seq"
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "hex_seq"
+                },
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "hex_jump"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "hex_seq"
+                      }
+                    ]
+                  }
+                }
+              ]
             },
             {
               "type": "REPEAT",
@@ -687,8 +713,29 @@
                     "name": "_pipe"
                   },
                   {
-                    "type": "SYMBOL",
-                    "name": "hex_seq"
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "hex_seq"
+                      },
+                      {
+                        "type": "REPEAT",
+                        "content": {
+                          "type": "SEQ",
+                          "members": [
+                            {
+                              "type": "SYMBOL",
+                              "name": "hex_jump"
+                            },
+                            {
+                              "type": "SYMBOL",
+                              "name": "hex_seq"
+                            }
+                          ]
+                        }
+                      }
+                    ]
                   }
                 ]
               }

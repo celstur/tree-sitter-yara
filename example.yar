@@ -6,7 +6,7 @@ private rule DEMO1
   meta:
     desc = "Demo1 rule. Hex alternatives, wildcards, not, jumps, string modifiers"
   strings:
-    $h1 = { 90 ~F? [6] ?? ( 4F?1 82 | A0 CE~03) [2-5]DE}
+    $h1 = { 90 ~F? [6] ?? ( 4F?1 82 | A0 [3] CE~03) [2-5]DE}
     $s2 = "line1\nline2\t\"quote\"" xor(0x01-0xff) ascii private
   condition:
     #h1 in (0..100) >= 1 and

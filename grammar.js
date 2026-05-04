@@ -81,7 +81,7 @@ module.exports = grammar({
       ),
 
     tag_list: ($) =>
-      seq($._colon, $.identifier, repeat(alias($.identifier, $.tag))),
+      seq($._colon, alias($.identifier, $.tag), repeat(alias($.identifier, $.tag))),
 
     rule_body: ($) =>
       prec.right(
@@ -160,7 +160,15 @@ module.exports = grammar({
         $._rbrack
       ),
     hex_alternative: ($) =>
-      seq($._lparen, sep1($.hex_seq, $._pipe), $._rparen),
+      seq($._lparen,
+        sep1(
+          seq(
+            $.hex_seq,
+            repeat(seq($.hex_jump, $.hex_seq))
+          ),
+          $._pipe),
+        $._rparen
+      ),
 
     regex_string: ($) =>
       prec.right(

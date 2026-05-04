@@ -787,6 +787,10 @@
       "required": true,
       "types": [
         {
+          "type": "hex_jump",
+          "named": true
+        },
+        {
           "type": "hex_seq",
           "named": true
         }
@@ -2615,10 +2619,6 @@
       "multiple": true,
       "required": true,
       "types": [
-        {
-          "type": "identifier",
-          "named": true
-        },
         {
           "type": "tag",
           "named": true
